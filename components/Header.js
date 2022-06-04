@@ -15,7 +15,7 @@ export default function Nav() {
   })
 
   return (
-    <header className="top-0 z-20 bg-emerald-900">
+    <header className="top-0 z-20 bg-stone-700">
       <div className="flex items-center justify-between max-w-6xl pt-4 pb-2 px-4 mx-auto lg:max-w-screen-xl">
         <Link href="/" passHref>
           <a className="cursor-pointer">
