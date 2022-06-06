@@ -16,9 +16,6 @@ const fetchInventory = (url, id) =>
     .then((res) => res.data)
 
 export default function ProductForm({ product }) {
-
-    console.log('product', product)
-
   const { data: productInventory } = useSWR(
     ['/api/available', product.handle],
     (url, id) => fetchInventory(url, id),
