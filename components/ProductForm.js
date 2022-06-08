@@ -49,7 +49,7 @@ export default function ProductForm({ product }) {
       options: allOptions,
       variantTitle: variant.node.title,
       variantPrice: variant.node.priceV2.amount,
-      variantQuantity: variant.node.quantityAvailable
+      variantQuantity: 1
     }
   })
 
