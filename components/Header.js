@@ -31,7 +31,7 @@ export default function Nav() {
           onClick={() => setCartOpen(!cartOpen)}
           >
           <div className="inline-flex items-center flex-wrap p-3 text-white">
-          <ShoppingBagIcon  className="h-6 w-6" aria-hidden="true" /> <span className="">Cart ({cartQuantity})</span>
+            <ShoppingBagIcon className="h-6 w-6 mr-3" aria-hidden="true" /> <span className="">Cart ({cartQuantity})</span>
           </div>
         </a>
         <MiniCart cart={cart} />

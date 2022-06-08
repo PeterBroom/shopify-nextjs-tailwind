@@ -14,8 +14,8 @@ const ProductCard = ({ product }) => {
       href={`/products/${handle}`}
     >
       <a className="group">
-      <div className="w-full aspect-w-1 aspect-h-1 rounded-lg overflow-hidden sm:aspect-w-2 sm:aspect-h-3">
-          <div className="relative group-hover:opacity-75 h-72">
+      <div className="relative w-full aspect-w-1 aspect-h-1 sm:aspect-w-2 sm:aspect-h-3 rounded-lg overflow-hidden">
+          <div className=" group-hover:opacity-75">
             <Image 
               src={originalSrc}
               alt={altText}

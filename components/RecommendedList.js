@@ -3,8 +3,8 @@ import ProductCard from "./ProductCard"
 
 const RecommendedList = ({ products, current }) => {
   return (
-    <div className="bg-white">
-      <div className="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
+    <div className="mt-20 bg-white border-solid border-gray-200 border-slate-200 border-y ">
+      <div className="max-w-2xl mx-auto py-20 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
         <h2 className="text-2xl font-extrabold text-gray-900 mb-6">
           Recommended Products
         </h2>
