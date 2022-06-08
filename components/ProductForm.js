@@ -22,7 +22,14 @@ export default function ProductForm({ product }) {
     { errorRetryCount: 3 }
   )
 
+  const { data: productQuantity } = useSWR(
+    ['/api/quantity', product.handle],
+    (url, id) => fetchInventory(url, id),
+    { errorRetryCount: 3 }
+  )
+
   const [available, setAvailable] = useState(true)
+  const [quantity, setQuantity] = useState(0)
 
   const { addToCart } = useContext(CartContext)
 
@@ -32,6 +39,7 @@ export default function ProductForm({ product }) {
     variant.node.selectedOptions.map(item => {
       allOptions[item.name] = item.value
     })
+    // console.log('variant', variant)
 
     return {
       id: variant.node.id,
@@ -41,7 +49,7 @@ export default function ProductForm({ product }) {
       options: allOptions,
       variantTitle: variant.node.title,
       variantPrice: variant.node.priceV2.amount,
-      variantQuantity: 1
+      variantQuantity: variant.node.quantityAvailable
     }
   })
 
@@ -84,20 +92,26 @@ export default function ProductForm({ product }) {
 
 
   useEffect(() => {
-    if (productInventory) {
-      const checkAvailable = productInventory?.variants.edges.filter(item => item.node.id === selectedVariant.id)
-
-      if (checkAvailable[0].node.availableForSale) {
-        setAvailable(true)
+    if (productQuantity) {
+      const checkQuantity = productQuantity?.variants.edges.filter(item => item.node.id === selectedVariant.id)
+      if (checkQuantity[0].node.quantityAvailable) {
+        setQuantity(checkQuantity[0].node.quantityAvailable)
       } else {
-        setAvailable(false)
+        setQuantity(0)
       }
     }
-  }, [productInventory, selectedVariant])
+  }, [productQuantity, selectedVariant])
+
+  const [inventoryLoaded, setInventoryLoaded] = useState(false)
+  useEffect(() => {
+    if (productInventory) {
+      setInventoryLoaded(true)
+    }
+  }, [productInventory])
 
   return (
     <div className="rounded-2xl p-4 shadow-lg flex flex-col w-full md:w-1/3">
-      <h2 className="text-2xl font-bold">{product.title}</h2>
+      <h2 className="mb-3 text-2xl font-bold">{product.title}</h2>
       <span className="pb-3">{formatter.format(selectedVariant.variantPrice)}</span>
       {
         product.options[0].values[0] !== 'Default Title' &&
@@ -114,20 +128,29 @@ export default function ProductForm({ product }) {
           />
         ))
       }
-      {
-        available ?
-          <button
-            onClick={() => {
-              addToCart(selectedVariant)
-            }}
-            className="bg-black rounded-lg text-white px-2 py-3 mt-3 hover:bg-gray-800">Add To Card
-          </button> :
-          <button
-            className="rounded-lg text-white px-2 py-3 mt-3 bg-gray-800 cursor-not-allowed">
-              Sold out!
-          </button>
-      }
+      <div className={`flex flex-col transition-opacity delay-300 ease-in ${inventoryLoaded === true ? 'opacity-1' : 'opacity-0'}`}>
+        <div  className="text-sm text-gray-500 py-2 mb-3">
+        {quantity ? 
+          <p>{quantity} Available</p>
+              :
+          <p>None available</p>
+          }
+        </div>
 
+        {
+          available && quantity ?
+            <button
+              onClick={() => {
+                addToCart(selectedVariant)
+              }}
+              className="bg-black rounded-lg text-white px-2 py-3 mt-3 hover:bg-gray-800">Add To Card
+            </button> :
+            <button
+              className="rounded-lg text-white px-2 py-3 mt-3 bg-rose-800 cursor-not-allowed">
+                Sold out!
+            </button>
+        }
+        </div>
     </div>
   )
 }
