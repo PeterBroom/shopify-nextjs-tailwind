@@ -155,7 +155,7 @@ export default function ProductForm({ product }) {
                 className="bg-black rounded-lg text-white px-2 py-3 mt-3 hover:bg-gray-800">Add To Card
               </button> :
               <button
-                className="rounded-lg text-white px-2 py-3 mt-3 bg-rose-800 cursor-not-allowed">
+                className="rounded-lg text-white px-2 py-3 mt-3 bg-gray-500 cursor-not-allowed">
                   Sold out!
               </button>
           }
