@@ -1,11 +1,20 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState, useRef, useEffect } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/solid'
 
 export default function ProductOptions({ name, values, selectedOptions, setOptions, productInventory, selectedVariant, available, quantity }) {
 // console.log('selectedVariant', selectedVariant)
 // console.log('productInventory', productInventory)
-  
+
+  const refs = useRef([]);
+
+  // const handleChange = (target) => {
+  //   console.log('target', target)
+  //   const focusTarget = refs.current.filter((item) => target === item)[0]
+  //   focusTarget.focus()
+  //   console.log('focusTarget', focusTarget)
+  // }
+
   return (
     <fieldset className="grid grid-cols-4 gap-2 mb-3">
       <div className='col-span-1 flex items-center z-1'>
@@ -33,15 +42,17 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
             leaveTo="transform opacity-0 scale-95"
           >
        
-            <Menu.Items className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10">
+            <Menu.Items className="origin-top-left absolute left-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10">
               <div className="py-1">
-                {values.map((value) => {
-                  const id = `option-${name}-${value}`;
+                {values.map((value, index) => {
+                  const id = `option${name}${value}`;
                   const checked = selectedOptions[name] === value;
                   return (
                     <Menu.Item key={id}>
                       {() => (
-                         <label key={id} htmlFor={id}>
+                         <label key={id} htmlFor={id} className={`block px-4 py-2 text-sm cursor-pointer focus-within:bg-black hover:bg-gray-100 ${checked
+                          ? "bg-gray-100 text-gray-900"
+                          : "text-gray-700"}`}>
                           <input
                             className="sr-only"
                             type="radio"
@@ -49,20 +60,13 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
                             name={`option-${name}`}
                             value={value}
                             checked={checked}
-                            onChange={() => {
+                            onChange={(e) => {
+                              // handleChange(e.target)
                               setOptions(name, value);
                             }}
+                            ref={(element) => refs.current[index] = element}
                           />
-                          <div
-                            className={`hover:bg-gray-100 ${
-                              (checked
-                                ? "bg-gray-100 text-gray-900"
-                                : "text-gray-700",
-                              "block px-4 py-2 text-sm cursor-pointer")
-                            }`}
-                          >
-                            <span className="px-2">{value}</span>
-                          </div>
+                          <span className="px-2">{value}</span>
                         </label>
                       )}
                     </Menu.Item>
