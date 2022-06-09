@@ -8,8 +8,8 @@ export default function ProductPageContent({ product }) {
   return (
     <>
     <div className=''>
-      <div className='grid grid-cols-2 gap-8 max-w-3xl mx-auto'>
-        <div className="col-span-1 relative w-full max-w-md bg-white overflow-hidden">
+      <div className='lg:grid lg:grid-cols-2 lg:gap-8 max-w-3xl mx-auto px-4 lg:px-0'>
+        <div className="col-span-1 relative mb-10 lg:mb-0 w-full max-w-md mx-auto bg-white overflow-hidden">
           <CarouselComponent carouselItems={product.images.edges} />
         </div>
         <div className={`col-span-1 relative w-full bg-white ${imageItemsLength > 1 ? 'pb-[60px]' : ''}`}>

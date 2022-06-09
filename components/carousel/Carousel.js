@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { wrap } from 'popmotion';
-import styles from './Carousel.module.css'
+// import styles from './Carousel.module.css'
 
 const container = {
   enter: () => {
