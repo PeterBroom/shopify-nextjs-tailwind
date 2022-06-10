@@ -30,7 +30,7 @@ export default function Header({sticky}) {
 
   let headerClasses = ''
   if (sticky) {
-    headerClasses = ` sticky ${hasScrolled === true ? 'transition-opacity delay-75 duration-500 ease-in  opacity-1' : ' opacity-0'}`
+    headerClasses = ` sticky will-change-[opacity] ${hasScrolled === true ? 'transition-opacity delay-75 duration-500 ease-in-out opacity-1' : ' opacity-0'}`
   }
 
   return (
