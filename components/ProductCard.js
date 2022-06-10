@@ -2,9 +2,8 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { formatter } from '../utils/helpers'
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, priority }) => {
   const { handle, title } = product.node
-
   const { altText, originalSrc } = product.node.images.edges[0].node
 
   const price = product.node.priceRange.minVariantPrice.amount
@@ -21,6 +20,7 @@ const ProductCard = ({ product }) => {
               alt={altText}
               layout="fill"
               objectFit="cover"
+              priority={priority ? priority : {}}
             />
           </div>
         </div>
