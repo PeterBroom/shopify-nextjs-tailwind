@@ -36,12 +36,12 @@ export default function Hero() {
 
           <h1 className="md:py-10 tracking-wide font-extrabold drop-shadow-xl">
             <motion.span 
-              className="block text-white text-3xl sm:text-5xl md:text-6xl mb-4"
+              className="block text-white text-2xl sm:text-5xl md:text-6xl mb-1 md:mb-4"
               custom={0}
               animate={controls}
             >Quill Stationary</motion.span>{" "}
             <motion.span
-              className="block text-slate-300 text-2xl sm:text-4xl md:text-4xl"
+              className="block text-slate-300 text-1xl sm:text-4xl md:text-4xl"
               custom={1} 
               animate={controls}
             >
