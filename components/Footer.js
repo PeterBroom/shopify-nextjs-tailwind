@@ -29,7 +29,7 @@ const navigation = [
               <a
                 target='_blank' rel='noreferrer'
                 href="https://github.com/PeterBroom/shopify-nextjs-tailwind"
-                className="w-full flex items-center justify-center px-8 py-3 m-0 border border-transparent text-sm md:text-md font-medium rounded-md text-white bg-emerald-600 hover:bg-emerald-500"
+                className="w-full flex items-center justify-center px-8 py-3 m-0 border border-transparent text-sm md:text-md font-medium rounded-md text-white bg-emerald-700 hover:bg-emerald-500"
               >
                 View on GitHub
               </a>
