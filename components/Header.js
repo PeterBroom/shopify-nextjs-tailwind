@@ -1,16 +1,16 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { useContext } from 'react'
+import { useContext, useState, useCallback, useEffect } from 'react'
 import { useMediaQuery } from 'react-responsive'
 import { CartContext } from '../context/shopContext'
 import MiniCart from './MiniCart'
 
 import { ShoppingBagIcon } from '@heroicons/react/solid'
 
-export default function Nav() {
+export default function Header({sticky}) {
 
-  const isTabletOrMobile = useMediaQuery({ maxWidth: 768 })
-  const logodimensions = isTabletOrMobile ? 25 : 50
+  const isTabletOrMobile = useMediaQuery({ minDeviceWidth: 768 })
+  const logodimensions = isTabletOrMobile ? 40 : 25
 
   const { cart, cartOpen, setCartOpen } = useContext(CartContext)
 
@@ -19,8 +19,26 @@ export default function Nav() {
     return (cartQuantity += item?.variantQuantity)
   })
 
+  const [hasScrolled, setScroll] = useState(false);
+
+
+  const checkScroll = useCallback((e) => {
+    setScroll(true);
+  }, [])
+  
+  useEffect(() => {
+      window.addEventListener("scroll", checkScroll);
+      return () => {
+        window.removeEventListener("scroll", checkScroll);
+      };
+  }, [checkScroll]);
+
+
+  const stickyClass = sticky === true ? ' fixed top-0' : ''
+  const visibleClass = hasScrolled === true ? ' opacity-1' : ' opacity-0'
+  
   return (
-    <header className="top-0 z-20 bg-slate-800">
+    <header className={`w-full z-20 bg-slate-800 transition-opacity ${stickyClass}${sticky ? visibleClass : ''}`}>
       <div className="flex items-center justify-between max-w-6xl pt-4 pb-2 px-4 mx-auto lg:max-w-screen-xl">
         <Link href="/" passHref>
           <a className="cursor-pointer">
