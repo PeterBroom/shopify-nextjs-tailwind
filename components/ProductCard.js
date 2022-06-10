@@ -17,10 +17,10 @@ const ProductCard = ({ product, priority }) => {
           <div className=" group-hover:opacity-75">
             <Image 
               src={originalSrc}
-              alt={altText}
+              alt={altText ? altText : 'Product image'}
               layout="fill"
               objectFit="cover"
-              loading="lazy"
+              lazy
               priority={priority ? priority : {}}
             />
           </div>
