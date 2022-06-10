@@ -1,12 +1,17 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useContext } from 'react'
+import { useMediaQuery } from 'react-responsive'
 import { CartContext } from '../context/shopContext'
 import MiniCart from './MiniCart'
 
 import { ShoppingBagIcon } from '@heroicons/react/solid'
 
 export default function Nav() {
+
+  const isTabletOrMobile = useMediaQuery({ maxWidth: 768 })
+  const logodimensions = isTabletOrMobile ? 25 : 50
+
   const { cart, cartOpen, setCartOpen } = useContext(CartContext)
 
   let cartQuantity = 0
@@ -21,8 +26,8 @@ export default function Nav() {
           <a className="cursor-pointer">
             <Image
               src="/images/logo/feather.svg"
-              alt="Jot logo"
-              height={50} width={50}
+              alt="Quill stationary logo"
+              height={logodimensions} width={logodimensions}
             />
           </a>
         </Link>
@@ -30,12 +35,14 @@ export default function Nav() {
           className="text-md font-regular cursor-pointer"
           onClick={() => setCartOpen(!cartOpen)}
           >
-          <div className="relative inline-flex items-center flex-wrap p-3 text-white">
-            <span className="sr-only">Cart </span>
-            <ShoppingBagIcon className="absolute left-[50%] -translate-x-[50%] h-10 w-10" aria-hidden="true" />
-            <span className="absolute top-3 left-[50%] -translate-x-[50%] text-xs text-slate-900">
-              {cartQuantity}
+          <div className="inline-flex items-center flex-wrap text-white">
+            <span className="p-2 md:sr-only">Cart ({cartQuantity})</span>
+            <div className='relative h-10 w-10 hidden md:block'>
+              <ShoppingBagIcon className="absolute top-0 left-[50%] -translate-x-[50%] h-10 w-10" aria-hidden="true" />
+              <span className="absolute top-5 left-[50%] -translate-x-[50%] text-xs text-slate-900">
+                {cartQuantity}
               </span>
+            </div>
           </div>
         </a>
         <MiniCart cart={cart} />
