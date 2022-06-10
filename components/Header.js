@@ -29,18 +29,13 @@ export default function Header({sticky}) {
       };
   }, [checkScroll]);
 
-  const [headerClasses, setHeaderClasses] = useState(null)
-  useEffect(() => {
+  let headerClasses = ''
   if (sticky) {
-    const classNames = `transition-opacity delay-75 duration-500 ease-in ${hasScrolled === false ? ' opacity-0' : ' opacity-1'}`
-    setHeaderClasses(classNames)
-  } else {
-    setHeaderClasses('')
+    headerClasses = ` sticky ${hasScrolled === true ? 'transition-opacity delay-75 duration-500 ease-in  opacity-1' : ' opacity-0'}`
   }
-}, [hasScrolled, sticky]);
 
   return (
-    <header className={`w-full z-20 bg-slate-800 top-0 opacity-1 ${headerClasses}${sticky === true ? ' sticky' : ' relative'}`}>
+    <header className={`w-full z-20 bg-slate-800 top-0${headerClasses}`}>
       <div className="flex items-center justify-between max-w-6xl pt-4 pb-2 px-4 mx-auto lg:max-w-screen-xl">
         <Link href="/" passHref>
           <a className="cursor-pointer leading-none">
