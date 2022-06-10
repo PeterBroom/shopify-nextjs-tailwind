@@ -20,6 +20,7 @@ const ProductCard = ({ product, priority }) => {
               alt={altText}
               layout="fill"
               objectFit="cover"
+              loading="lazy"
               priority={priority ? priority : {}}
             />
           </div>
