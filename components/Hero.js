@@ -28,7 +28,7 @@ export default function Hero() {
         />
       </div>
 
-      <div className="relative min-h-[300px] md:min-h-[500px] max-w-screen-xl px-4 mx-auto flex items-center justify-center">
+      <div className="relative min-h-[500px] md:min-h-[500px] max-w-screen-xl px-4 mx-auto flex items-center justify-center">
         <div className='h-full flex items-center justify-center'>
           <div className='h-full mr-5 md:mr-10'>
             <Logo />
