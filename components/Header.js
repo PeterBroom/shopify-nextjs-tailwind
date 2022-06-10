@@ -15,7 +15,11 @@ export default function Header({sticky}) {
   const [hasScrolled, setScroll] = useState(false);
 
   const checkScroll = useCallback((e) => {
-    setScroll(true);
+    if (e.currentTarget.scrollY > 0) {
+      setScroll(true)
+    } else {
+      setScroll(false)
+    }
   }, [])
   
   useEffect(() => {
@@ -25,11 +29,21 @@ export default function Header({sticky}) {
       };
   }, [checkScroll]);
 
+  const [headerClasses, setHeaderClasses] = useState(null)
+  useEffect(() => {
+  if (sticky) {
+    const classNames = `transition-opacity delay-75 duration-500 ease-in ${hasScrolled === false ? ' opacity-0' : ' opacity-1'}`
+    setHeaderClasses(classNames)
+  } else {
+    setHeaderClasses('')
+  }
+}, [hasScrolled, sticky]);
+
   return (
-    <header className={`w-full z-20 bg-slate-800 top-0${hasScrolled === true ? ' transition-opacity opacity-1' : ' opacity-0'}${sticky === true ? ' sticky' : ' relative'}`}>
+    <header className={`w-full z-20 bg-slate-800 top-0 opacity-1 ${headerClasses}${sticky === true ? ' sticky' : ' relative'}`}>
       <div className="flex items-center justify-between max-w-6xl pt-4 pb-2 px-4 mx-auto lg:max-w-screen-xl">
         <Link href="/" passHref>
-          <a className="cursor-pointer">
+          <a className="cursor-pointer leading-none">
             <Image
               src="/images/logo/feather.svg"
               alt="Quill stationary logo"
