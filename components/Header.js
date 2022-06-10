@@ -6,10 +6,9 @@ import MiniCart from './MiniCart'
 
 export default function Header({sticky}) {
   const { cart, cartOpen, setCartOpen } = useContext(CartContext)
-
   let cartQuantity = 0
   cart.map(item => {
-    return (cartQuantity += item?.variantQuantity)
+    return (cartQuantity += item?.variantQuantity)    
   })
 
   const [hasScrolled, setScroll] = useState(false);
@@ -51,7 +50,7 @@ export default function Header({sticky}) {
           onClick={() => setCartOpen(!cartOpen)}
           >
           <div className="inline-flex items-center flex-wrap text-white">
-            <span className={`p-2 transition-opacity duration-300 ease-in-out${cartQuantity ? ' opacity-1' : ' opacity-0'}`}>Cart ({cartQuantity})</span>
+            <span className={`p-2 transition-opacity duration-300 ease-in-out${cartQuantity > 0 ? ' opacity-1' : ' opacity-0'}`}>Cart ({cartQuantity})</span>
           </div>
         </a>
         <MiniCart cart={cart} />
