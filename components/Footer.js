@@ -35,7 +35,7 @@ const navigation = [
               </a>
             </div>
           </div>
-          <p className="mt-8 text-center text-gray-400">&copy; 2022 All right reserved.</p>
+          <p className="mt-8 text-center text-gray-500">&copy; 2022 All right reserved.</p>
         </div>
       </footer>
     )
