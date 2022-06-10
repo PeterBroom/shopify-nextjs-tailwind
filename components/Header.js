@@ -4,8 +4,6 @@ import { useContext, useState, useCallback, useEffect } from 'react'
 import { CartContext } from '../context/shopContext'
 import MiniCart from './MiniCart'
 
-import { ShoppingBagIcon } from '@heroicons/react/solid'
-
 export default function Header({sticky}) {
   const { cart, cartOpen, setCartOpen } = useContext(CartContext)
 
@@ -15,7 +13,6 @@ export default function Header({sticky}) {
   })
 
   const [hasScrolled, setScroll] = useState(false);
-
 
   const checkScroll = useCallback((e) => {
     setScroll(true);
@@ -28,12 +25,8 @@ export default function Header({sticky}) {
       };
   }, [checkScroll]);
 
-
-  const stickyClass = sticky === true ? ' fixed top-0' : ''
-  const visibleClass = hasScrolled === true ? ' opacity-1' : ' opacity-0'
-  
   return (
-    <header className={`w-full z-20 bg-slate-800 transition-opacity ${stickyClass}${sticky ? visibleClass : ''}`}>
+    <header className={`w-full z-20 bg-slate-800 top-0${hasScrolled === true ? ' transition-opacity opacity-1' : ' opacity-0'}${sticky === true ? ' sticky' : ' relative'}`}>
       <div className="flex items-center justify-between max-w-6xl pt-4 pb-2 px-4 mx-auto lg:max-w-screen-xl">
         <Link href="/" passHref>
           <a className="cursor-pointer">
@@ -49,13 +42,7 @@ export default function Header({sticky}) {
           onClick={() => setCartOpen(!cartOpen)}
           >
           <div className="inline-flex items-center flex-wrap text-white">
-            <span className="p-2 md:sr-only">Cart ({cartQuantity})</span>
-            <div className='relative h-10 w-10 hidden md:block'>
-              <ShoppingBagIcon className="absolute top-0 left-[50%] -translate-x-[50%] h-10 w-10" aria-hidden="true" />
-              <span className="absolute top-5 left-[50%] -translate-x-[50%] text-xs text-slate-900">
-                {cartQuantity}
-              </span>
-            </div>
+            <span className={`p-2 transition-opacity duration-300 ease-in-out${cartQuantity ? ' opacity-1' : ' opacity-0'}`}>Cart ({cartQuantity})</span>
           </div>
         </a>
         <MiniCart cart={cart} />
