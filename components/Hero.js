@@ -24,6 +24,7 @@ export default function Hero() {
           src="https://tailwindui.com/img/ecommerce-images/product-feature-02-full-width.jpg"
           alt="Background image"
           layout="fill"
+          priority
         />
       </div>
 
