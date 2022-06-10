@@ -55,7 +55,7 @@
     ]
     
     return (
-      <div className='w-[80px] h-[80px] md:w-[120px] md:h-[120px]'>
+      <div className='w-[60px] h-[60px] md:w-[120px] md:h-[120px]'>
       <motion.svg
         viewBox="0 0 58 58"
         fill="none"
