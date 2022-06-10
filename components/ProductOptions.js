@@ -42,7 +42,7 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
             leaveTo="transform opacity-0 scale-95"
           >
        
-            <Menu.Items className="origin-top-left absolute left-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10">
+            <Menu.Items className="origin-top-left absolute left-0 mt-2 w-full min-w-40 max-w-[60%] rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10">
               <div className="py-1">
                 {values.map((value, index) => {
                   const id = `option${name}${value}`;
