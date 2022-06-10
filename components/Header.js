@@ -1,17 +1,12 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useContext, useState, useCallback, useEffect } from 'react'
-import { useMediaQuery } from 'react-responsive'
 import { CartContext } from '../context/shopContext'
 import MiniCart from './MiniCart'
 
 import { ShoppingBagIcon } from '@heroicons/react/solid'
 
 export default function Header({sticky}) {
-
-  const isTabletOrMobile = useMediaQuery({ minDeviceWidth: 768 })
-  const logodimensions = isTabletOrMobile ? 40 : 25
-
   const { cart, cartOpen, setCartOpen } = useContext(CartContext)
 
   let cartQuantity = 0
@@ -45,7 +40,7 @@ export default function Header({sticky}) {
             <Image
               src="/images/logo/feather.svg"
               alt="Quill stationary logo"
-              height={logodimensions} width={logodimensions}
+              height={30} width={30}
             />
           </a>
         </Link>
