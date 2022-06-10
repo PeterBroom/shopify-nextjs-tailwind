@@ -24,8 +24,9 @@ export default function Home({products}) {
 
 export async function getStaticProps() {
   const products = await getProductsInCollection()
+  const stickyHeader = true
 
   return {
-    props: { products }
+    props: { products, stickyHeader }
   }
 }
