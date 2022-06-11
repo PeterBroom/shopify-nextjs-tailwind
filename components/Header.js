@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import Image from 'next/image'
+import SVG from 'react-inlinesvg'
 import { useContext, useState, useCallback, useEffect } from 'react'
 import { CartContext } from '../context/shopContext'
 import MiniCart from './MiniCart'
@@ -38,10 +38,12 @@ export default function Header({sticky}) {
       <div className="flex items-center justify-between max-w-6xl pt-4 pb-2 px-4 mx-auto lg:max-w-screen-xl">
         <Link href="/" passHref>
           <a className="cursor-pointer leading-none">
-            <Image
-              src="/images/logo/feather.svg"
-              alt="Quill stationary logo"
-              height={30} width={30}
+            <SVG 
+              src='/images/logo/feather.svg'
+              className='object-contain'
+              aria-hidden='true'
+              loading='lazy'
+              alt='Quill stationary logo'
             />
           </a>
         </Link>
