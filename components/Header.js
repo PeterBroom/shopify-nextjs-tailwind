@@ -55,8 +55,8 @@ export default function Header({sticky}) {
           <div className="relative inline-flex items-center flex-wrap text-white">
             <span className={`p-2 transition-opacity duration-300 ease-in-out`}>
               <span className='sr-only'>Cart</span>
-              <ShoppingBagIcon className='h-8 w-8' />
-              <span className={`absolute top-1 right-0 flex items-center justify-center text-sm font-bold h-6 w-6 rounded-[50%] bg-emerald-600 transition-all duration-300 ease-in-out${cartQuantity > 0 ? ' opacity-1' : ' opacity-0'}`}>{cartQuantity}</span>
+              <ShoppingBagIcon className='h-6 w-6 md:h-8 md:w-8' />
+              <span className={`absolute top-1 right-0 flex items-center justify-center text-sm font-bold h-5 w-5 md:h-6 md:w-6 rounded-[50%] bg-emerald-600 transition-all duration-300 ease-in-out${cartQuantity > 0 ? ' opacity-1' : ' opacity-0'}`}>{cartQuantity}</span>
            </span>
           </div>
         </button>
