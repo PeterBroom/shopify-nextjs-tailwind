@@ -23,7 +23,7 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
       <div className="flex items-center flex-wrap col-span-3">
         <Menu as="div" className="w-full relative text-left">
           <div className='max-w-[60%] z-0'>
-            <Menu.Button className="inline-flex justify-between w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-emerald-500">
+            <Menu.Button className="inline-flex justify-between w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none">
               {selectedOptions[name]}
               <ChevronDownIcon
                 className="-mr-1 ml-2 h-5 w-5"
@@ -43,7 +43,7 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
           >
        
             <Menu.Items className="origin-top-left absolute left-0 mt-2 w-full min-w-40 max-w-[60%] rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10">
-              <div className="py-1">
+              <div className="">
                 {values.map((value, index) => {
                   const id = `option${name}${value}`;
                   const checked = selectedOptions[name] === value;
