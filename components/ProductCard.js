@@ -21,7 +21,7 @@ const ProductCard = ({ product, priority }) => {
               width={width}
               height={height}
               layout="fill"
-              objectFit="cover"
+              className="object-cover"
               lazy='true'
               priority={priority ? priority : {}}
             />
