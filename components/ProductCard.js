@@ -20,7 +20,7 @@ const ProductCard = ({ product, priority }) => {
               alt={altText ? altText : 'Product image'}
               layout="fill"
               objectFit="cover"
-              lazy
+              lazy='true'
               priority={priority ? priority : {}}
             />
           </div>
