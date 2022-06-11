@@ -3,15 +3,6 @@ import 'tailwindcss/tailwind.css'
 import ShopProvider from '../context/shopContext'
 import { useRouter } from 'next/router'
 import Layout from '../components/Layout'
-// import NProgress from 'nprogress'
-
-
-// useRouter.events.on('routeChangeStart', (url) => {
-//   NProgress.configure({ showSpinner: false, parent: 'header' })
-//   NProgress.start()
-// })
-// useRouter.events.on('routeChangeComplete', () => NProgress.done())
-// useRouter.events.on('routeChangeError', () => NProgress.done())
 
 function Shop({ Component, pageProps }) {
     const router = useRouter();
@@ -22,6 +13,17 @@ function Shop({ Component, pageProps }) {
         </Layout>
       </ShopProvider>
     )
+}
+
+export async function getServerSideProps({ req, res }) {
+  res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=10, stale-while-revalidate=59'
+  )
+
+  return {
+    props: {},
+  }
 }
 
 export default Shop
