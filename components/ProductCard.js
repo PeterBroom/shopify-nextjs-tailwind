@@ -4,7 +4,7 @@ import { formatter } from '../utils/helpers'
 
 const ProductCard = ({ product, priority }) => {
   const { handle, title } = product.node
-  const { altText, originalSrc } = product.node.images.edges[0].node
+  const { altText, originalSrc, width, height } = product.node.images.edges[0].node
 
   const price = product.node.priceRange.minVariantPrice.amount
 
@@ -18,6 +18,8 @@ const ProductCard = ({ product, priority }) => {
             <Image 
               src={originalSrc}
               alt={altText ? altText : 'Product image'}
+              width={width}
+              height={height}
               layout="fill"
               objectFit="cover"
               lazy='true'

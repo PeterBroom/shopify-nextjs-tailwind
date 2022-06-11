@@ -18,11 +18,13 @@ export default function Hero() {
 
   return (
     <div className="relative bg-white overflow-hidden">
-      <div className="absolute inset-0 after:content-['*'] after:bg-slate-900/70 after:h-full after:w-full after:absolute">
+      <div className="absolute inset-0 after:content-[''] after:bg-slate-900/70 after:h-full after:w-full after:absolute">
         <Image
           className="h-full w-full object-cover"
           src="https://tailwindui.com/img/ecommerce-images/product-feature-02-full-width.jpg"
           alt="Background image"
+          width={1358}
+          height={800}
           layout="fill"
           priority
         />

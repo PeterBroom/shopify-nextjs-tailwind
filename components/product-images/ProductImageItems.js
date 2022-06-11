@@ -26,12 +26,13 @@ export default function ProductImageItems ({items}) {
   let imageMap = []
 
   items.map((item, index) => {
+    console.log('image item', item)
     const img = {
       key: index,
       url: item.node.originalSrc,
       thumb: item.node.originalSrc,
-      width: 1920,
-      height: 1080,
+      width: item.node.width,
+      height: item.node.height,
     }
     imageMap.push(img)
   })
@@ -54,6 +55,8 @@ export default function ProductImageItems ({items}) {
                 variants={container}
                 initial="enter"
                 animate="center"
+                width={imageMap[imageIndex].width}
+                height={imageMap[imageIndex].height}
                 exit="exit"
                 transition={{
                   opacity: { duration: 0.5 }
