@@ -48,22 +48,27 @@ export default function ProductImageItems ({items}) {
     <div className='h-full'>
         <div className='relative h-96 md:h-[30rem] rounded-lg flex flex-row flex-nowrap items-center justify-center overflow-hidden'>
             <AnimatePresence initial={false}>
-            <motion.img
-                className='absolute top-50 -translate-y-50 object-cover'
-                src={imageMap[imageIndex].url}
+              <motion.div
+                className=''
                 key={page}
                 variants={container}
                 initial="enter"
                 animate="center"
-                width={imageMap[imageIndex].width}
-                height={imageMap[imageIndex].height}
                 exit="exit"
                 transition={{
                   opacity: { duration: 0.5 }
                 }}
-                layout='fill'
-                alt={imageMap[imageIndex].alt}
-            />
+              >
+
+                <Image
+                    className='object-cover'
+                    src={imageMap[imageIndex].url}
+                    width={imageMap[imageIndex].width}
+                    height={imageMap[imageIndex].height}
+                    layout='fill'
+                    alt={imageMap[imageIndex].alt}
+                />
+              </motion.div>
             </AnimatePresence>
         </div>
         {imageMap.length > 1 &&
