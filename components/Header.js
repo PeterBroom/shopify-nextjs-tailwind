@@ -48,6 +48,7 @@ export default function Header({sticky}) {
         <a 
           className="text-md font-regular cursor-pointer"
           onClick={() => setCartOpen(!cartOpen)}
+          rel='nofollow'
           >
           <div className="inline-flex items-center flex-wrap text-white">
             <span className={`p-2 transition-opacity duration-300 ease-in-out${cartQuantity > 0 ? ' opacity-1' : ' opacity-0'}`}>Cart ({cartQuantity})</span>
