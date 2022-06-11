@@ -56,29 +56,29 @@
     
     return (
       <div className='w-[60px] h-[60px] md:w-[120px] md:h-[120px]'>
-      <motion.svg
-        viewBox="0 0 58 58"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        variants={svgVariants}
-        initial="start"
-        animate="finished"
-      >
-        {paths.map((item, i) => (
-          <motion.path
-            key={i}
-            d={item.d}
-            initial="start"
-            custom={i}
-            stroke="white"
-            strokeWidth="4.83333"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            animate={controls}
-            variants={pathVariants}
-          />
-        ))}
-      </motion.svg>
+        <motion.svg
+          viewBox="0 0 58 58"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          variants={svgVariants}
+          initial="start"
+          animate="finished"
+        >
+          {paths.map((item, i) => (
+            <motion.path
+              key={i}
+              d={item.d}
+              initial="start"
+              custom={i}
+              stroke="white"
+              strokeWidth="4.83333"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              animate={controls}
+              variants={pathVariants}
+            />
+          ))}
+        </motion.svg>
       </div>
     )
   }
