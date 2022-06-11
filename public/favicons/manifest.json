@@ -9,6 +9,7 @@
   "start_url": "https://shopify-nextjs-tailwind-alpha.vercel.app/?homescreen=1",
   "background_color": "#0f172a",
   "theme_color": "#fff",
+  "prefer_related_applications": false,
   "icons": [
     {
       "src": "/favicons/favicon-16x16.png",
