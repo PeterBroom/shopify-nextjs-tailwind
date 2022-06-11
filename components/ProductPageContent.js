@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import ProductForm from './ProductForm'
 import RecommendedList from './RecommendedList'
-import CarouselComponent from './carousel/CarouselComponent'
+import ProductImages from './product-images/ProductImages'
 
 export default function ProductPageContent({ product }) {
   const imageItemsLength = product.images.edges.length
@@ -10,7 +10,7 @@ export default function ProductPageContent({ product }) {
     <div className=''>
       <div className='lg:grid lg:grid-cols-2 lg:gap-8 max-w-3xl mx-auto px-4 lg:px-0'>
         <div className="col-span-1 relative mb-10 lg:mb-0 w-full max-w-md mx-auto bg-white overflow-hidden">
-          <CarouselComponent carouselItems={product.images.edges} />
+          <ProductImages items={product.images.edges} />
         </div>
         <div className={`col-span-1 relative w-full bg-white ${imageItemsLength > 1 ? 'pb-[60px]' : ''}`}>
           <ProductForm product={product} />

@@ -2,7 +2,6 @@ import { useState } from 'react'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { wrap } from 'popmotion';
-// import styles from './Carousel.module.css'
 
 const container = {
   enter: () => {
@@ -22,17 +21,11 @@ const container = {
   }
 };
 
-export default function Carousel ({carouselItems}) {
+export default function ProductImageItems ({items}) {
   // build image map
   let imageMap = []
 
-  // let isMobile = window.matchMedia("(max-width: 700px)").matches;
-
-  // const thumbDimensions = isMobile ? 30 : 60
-
-  // const maxWidth = (carouselItems.carouselArray.length * (thumbDimensions + 24))
-
-  carouselItems.map((item, index) => {
+  items.map((item, index) => {
     const img = {
       key: index,
       url: item.node.originalSrc,
