@@ -6,7 +6,7 @@
   "lang": "en-gB",
   "display": "standalone",
   "orientation": "any",
-  "start_url": "/?homescreen=1",
+  "start_url": "https://shopify-nextjs-tailwind-alpha.vercel.app/?homescreen=1",
   "background_color": "#0f172a",
   "theme_color": "#fff",
   "icons": [
