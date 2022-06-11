@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import SVG from 'react-inlinesvg'
 import { useContext, useState, useCallback, useEffect } from 'react'
+import { ShoppingBagIcon } from '@heroicons/react/solid'
 import { CartContext } from '../context/shopContext'
 import MiniCart from './MiniCart'
 
@@ -51,8 +52,12 @@ export default function Header({sticky}) {
           className="text-md font-regular cursor-pointer"
           onClick={() => setCartOpen(!cartOpen)}
           >
-          <div className="inline-flex items-center flex-wrap text-white">
-            <span className={`p-2 transition-opacity duration-300 ease-in-out${cartQuantity > 0 ? ' opacity-1' : ' opacity-0'}`}>Cart ({cartQuantity})</span>
+          <div className="relative inline-flex items-center flex-wrap text-white">
+            <span className={`p-2 transition-opacity duration-300 ease-in-out`}>
+              <span className='sr-only'>Cart</span>
+              <ShoppingBagIcon className='h-8 w-8' />
+              <span className={`absolute top-1 right-0 flex items-center justify-center text-sm font-bold h-6 w-6 rounded-[50%] bg-emerald-600 transition-all duration-300 ease-in-out${cartQuantity > 0 ? ' opacity-1' : ' opacity-0'}`}>{cartQuantity}</span>
+           </span>
           </div>
         </button>
         <MiniCart cart={cart} />
