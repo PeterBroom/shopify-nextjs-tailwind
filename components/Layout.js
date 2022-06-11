@@ -9,6 +9,8 @@ export default function Layout({ children }) {
     <div className="flex flex-col justify-between min-h-screen">
       <Head key='layout-head'>
         <meta name='theme-color' content='#0f172a' />
+        <link rel="manifest" href="/favicons/manifest.json" />
+
       </Head>
       <Header sticky={sticky} />
       <main className={sticky ? '-mt-[4rem]' : ''}>

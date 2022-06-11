@@ -1,0 +1,14 @@
+{
+  "name": "Quill Stationary",
+  "short_name": "Quill Stationary",
+  "description": "Shop.",
+  "dir": "auto",
+  "lang": "en-gB",
+  "display": "standalone",
+  "orientation": "any",
+  "start_url": "/?homescreen=1",
+  "background_color": "#0f172a",
+  "theme_color": "#fff",
+  "icons": [
+  ]
+}
