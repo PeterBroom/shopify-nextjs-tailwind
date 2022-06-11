@@ -37,7 +37,7 @@ export default function Header({sticky}) {
     <header className={`w-full z-20 bg-slate-800 top-0${headerClasses}`}>
       <div className="flex items-center justify-between max-w-6xl pt-4 pb-2 px-4 mx-auto lg:max-w-screen-xl">
         <Link href="/" passHref>
-          <a className="cursor-pointer leading-none">
+          <a className="cursor-pointer leading-none"><span className='sr-only'>Home</span>
             <SVG 
               src='/images/logo/feather.svg'
               className='object-contain'
