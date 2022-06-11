@@ -2,6 +2,18 @@
 import ProductCard from "./ProductCard"
 
 const ProductList = ({ products }) => {
+  products.sort((a, b) => {
+    const titleA = a.node.title.toUpperCase()
+    const titleB = b.node.title.toUpperCase()
+    if (titleA < titleB) {
+      return -1
+    }
+    if (titleA > titleB) {
+      return 1
+    }
+    return 0
+  })
+
   return (
     <div className="bg-white">
       <div className="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
