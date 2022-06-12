@@ -26,7 +26,6 @@ export default function ProductImageItems ({items}) {
   let imageMap = []
 
   items.map((item, index) => {
-    console.log('image item', item)
     const img = {
       key: index,
       url: item.node.originalSrc,
