@@ -21,7 +21,6 @@ export default function ProductForm({ product }) {
     (url, id) => fetchInventory(url, id),
     { errorRetryCount: 3 }
   )
-
   const { data: productQuantity } = useSWR(
     ['/api/quantity', product.handle],
     (url, id) => fetchInventory(url, id),

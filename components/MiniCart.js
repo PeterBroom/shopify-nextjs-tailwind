@@ -1,21 +1,49 @@
-import { Fragment, useContext, useRef } from 'react'
+import { Fragment, useContext, useRef, useEffect, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
+import { PlusIcon } from '@heroicons/react/solid'
+import { MinusIcon } from '@heroicons/react/solid'
+
 import Image from 'next/image'
 import Link from 'next/link'
 import { CartContext } from '../context/shopContext'
 import { formatter } from '../utils/helpers'
+import axios from "axios"
+import useSWR from 'swr'
 
+// setup inventory fetcher
+const fetchInventory = (url, id) =>
+  axios
+    .get(url, {
+      params: {
+        id: id,
+      },
+    })
+    .then((res) => res.data)
 
 export default function MiniCart({ cart }) {
   const cancelButtonRef = useRef()
+  const [handle, setHandle] = useState(null)
+  const [quantity, setQuantity] = useState(null)
 
-  const { cartOpen, setCartOpen, checkoutUrl, removeCartItem } = useContext(CartContext)
+  const { cartOpen, setCartOpen, checkoutUrl, removeCartItem, decreaseQuantity, increaseQuantity } = useContext(CartContext)
 
   let cartTotal = 0
   cart.map(item => {
     cartTotal += item?.variantPrice * item?.variantQuantity
   })
+
+  const { data: productQuantity } = useSWR(
+    ['/api/quantity', handle],
+    (url, id) => fetchInventory(url, id),
+    { errorRetryCount: 3 }
+  )
+
+  useEffect(() => {
+    const findQuantity = productQuantity?.variants?.edges[0].node.quantityAvailable ? productQuantity?.variants?.edges[0].node.quantityAvailable : 0
+    setQuantity(findQuantity)
+  
+  }, [productQuantity?.variants?.edges, quantity])
 
   return (
     <Transition.Root show={cartOpen} as={Fragment}>
@@ -84,7 +112,7 @@ export default function MiniCart({ cart }) {
                                   </div>
 
                                   <div className="ml-4 flex-1 flex flex-col">
-                                    <div>
+                                    <div className='mb-2'>
                                       <div className="flex justify-between text-base font-medium text-gray-900">
                                         <h3>
                                           <Link href={`/products/${product.handle}`} passHref>
@@ -97,8 +125,21 @@ export default function MiniCart({ cart }) {
                                       <p className="mt-1 text-sm text-gray-500">{product.variantTitle}</p>
                                     }
                                     </div>
-                                    <div className="flex-1 flex items-end justify-between text-sm">
-                                      <p className="text-gray-500">Qty {product.variantQuantity}</p>
+                                    <div className="flex-1 flex items-center justify-between text-sm">
+                                      <div className="flex text-gray-500 flex justify-center items-center border divide-x divide-solid">
+                                        <button 
+                                          className='flex items-center justify-center transition-all rounded-sm text-black py-1 px-2'
+                                          onClick={() => decreaseQuantity(product.id)}
+                                        ><MinusIcon className='h-3 w-3' /></button>
+                                          <div className='py-1 px-3 grow-1'><span className='sr-only'>Qty </span>{product.variantQuantity}</div>
+                                        <button 
+                                          className='flex items-center justify-center transition-all rounded-sm text-black py-1 px-2'
+                                          onClick={() => {
+                                            setHandle(product.handle)                                            
+                                            increaseQuantity(product.id, quantity)
+                                          }}
+                                          ><PlusIcon className='h-3 w-3' /></button>
+                                      </div>
 
                                       <div className="flex">
                                         <button

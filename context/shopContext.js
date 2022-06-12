@@ -13,6 +13,8 @@ export default function ShopProvider({ children }) {
     if (localStorage.checkout_id) {
       const cartObject = JSON.parse(localStorage.checkout_id)
 
+      console.log('cartObject',cartObject)
+
       if (cartObject[0].id) {
         setCart([cartObject[0]])
       } else if (cartObject[0].length > 0) {
@@ -67,13 +69,36 @@ export default function ShopProvider({ children }) {
 
     const newCheckout = await updateCheckout(checkoutId, updatedCart)
 
-    localStorage.setItem("checkout_id", JSON.stringify([updatedCart, newCheckout]))
+    localStorage.setItem("checkout_id", JSON.stringify([cart, newCheckout]))
 
     if (cart.length === 1) {
       setCartOpen(false)
     }
   }
 
+  async function increaseQuantity(itemToIncrease, quantity) {
+    cart.map(item => {
+      if (item.id === itemToIncrease && item.variantQuantity < quantity) {
+        item.variantQuantity++
+      }
+    })
+    setCart([...cart])
+
+    const newCheckout = await updateCheckout(checkoutId, cart)
+    localStorage.setItem("checkout_id", JSON.stringify([cart, newCheckout]))
+  }
+
+  async function decreaseQuantity(itemToDecrease) {
+    cart.map(item => {
+      if (item.id === itemToDecrease && item.variantQuantity !== 1) {
+        item.variantQuantity--
+      }
+    })
+    setCart([...cart])
+
+    const newCheckout = await updateCheckout(checkoutId, cart)
+    localStorage.setItem("checkout_id", JSON.stringify([updatedCart, newCheckout]))
+  }
 
   return (
     <CartContext.Provider value={{ 
@@ -82,7 +107,9 @@ export default function ShopProvider({ children }) {
       setCartOpen,
       addToCart,
       checkoutUrl,
-      removeCartItem
+      removeCartItem,
+      decreaseQuantity,
+      increaseQuantity
     }}>
       {children}
     </CartContext.Provider>
