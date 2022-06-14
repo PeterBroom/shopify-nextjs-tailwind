@@ -13,7 +13,7 @@ export default function Layout({ children }) {
 
       </Head>
       <Header sticky={sticky} />
-      <main className={sticky ? '-mt-[4rem]' : ''}>
+      <main className={sticky ? '-mt-[5rem]' : ''}>
         {children}
       </main>
       <Footer />
