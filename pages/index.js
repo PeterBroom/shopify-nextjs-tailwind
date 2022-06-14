@@ -23,11 +23,10 @@ function IndexPage({ products }) {
 
 export async function getStaticProps() {
   const products = await getAllProductsInCollection()
+  const stickyHeader = true
 
   return {
-    props: {
-      products
-    },
+    props: {products, stickyHeader}
   }
 }
 
