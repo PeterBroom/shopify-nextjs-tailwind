@@ -1,14 +1,20 @@
 import Link from 'next/link'
 import SVG from 'react-inlinesvg'
-import { useContext, useState, useCallback, useEffect } from 'react'
+import { useState, useCallback, useEffect } from 'react'
+import { useCartContext, useMenuContext } from '@/context/Store'
 import { ShoppingBagIcon } from '@heroicons/react/solid'
-import { CartContext } from '../context/shopContext'
 import MiniCart from './MiniCart'
 
 export default function Header({sticky}) {
-  const { cart, cartOpen, setCartOpen } = useContext(CartContext)
+  const [ cart, isLoading ] = useCartContext()
+  const [cartOpen, setCartOpen] = useMenuContext()
+
+  async function cartOpenButton() {
+    setCartOpen(true)
+  }
+
   let cartQuantity = 0
-  cart.map(item => {
+  cart > 0 && cart.map(item => {
     return (cartQuantity += item?.variantQuantity)    
   })
 
@@ -48,15 +54,15 @@ export default function Header({sticky}) {
             />
           </a>
         </Link>
-        <button 
+        <button
           className="text-md font-regular cursor-pointer"
-          onClick={() => setCartOpen(!cartOpen)}
+          onClick={() => cartOpenButton(!setCartOpen)}
           >
           <div className="relative inline-flex items-center flex-wrap text-white">
             <span className={`p-2 transition-opacity duration-300 ease-in-out`}>
               <span className='sr-only'>Cart</span>
               <ShoppingBagIcon className='h-6 w-6 md:h-8 md:w-8' />
-              <span className={`absolute top-1 right-0 flex items-center justify-center text-sm font-bold h-5 w-5 md:h-6 md:w-6 rounded-[50%] bg-emerald-600 transition-all duration-300 ease-in-out${cartQuantity > 0 ? ' opacity-1' : ' opacity-0'}`}>{cartQuantity}</span>
+              <span className={`absolute top-1 right-0 flex items-center justify-center text-sm font-bold h-5 w-5 md:h-6 md:w-6 rounded-[50%] bg-emerald-600 transition-all duration-300 ease-in-out${cart.length > 0 ? ' opacity-1' : ' opacity-0'}`}>{cart.length}</span>
            </span>
           </div>
         </button>

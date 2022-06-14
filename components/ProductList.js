@@ -1,7 +1,7 @@
 
 import ProductCard from "./ProductCard"
 
-const ProductList = ({ products }) => {
+function ProductList({ products }) {
   products.sort((a, b) => {
     const titleA = a.node.title.toUpperCase()
     const titleB = b.node.title.toUpperCase()

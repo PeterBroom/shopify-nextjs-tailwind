@@ -22,9 +22,9 @@ export default function Hero() {
         <Image
           className="h-full w-full object-cover"
           src="https://tailwindui.com/img/ecommerce-images/product-feature-02-full-width.jpg"
-          alt="Background image"
-          width={1358}
-          height={800}
+          alt="Hero image"
+          // width={1358}
+          // height={800}
           layout="fill"
           priority
         />

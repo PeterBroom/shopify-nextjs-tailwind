@@ -2,27 +2,17 @@ import React, { Fragment, useState, useRef, useEffect } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/solid'
 
-export default function ProductOptions({ name, values, selectedOptions, setOptions, productInventory, selectedVariant, available, quantity }) {
-// console.log('selectedVariant', selectedVariant)
-// console.log('productInventory', productInventory)
-
+export default function ProductOptions({ name, values, selectedOptions, setOptions, setVariant, setVariantPrice, productInventory, selectedVariant, available, quantity }) {
   const refs = useRef([]);
-
-  // const handleChange = (target) => {
-  //   console.log('target', target)
-  //   const focusTarget = refs.current.filter((item) => target === item)[0]
-  //   focusTarget.focus()
-  //   console.log('focusTarget', focusTarget)
-  // }
 
   return (
     <fieldset className="grid grid-cols-4 gap-2 mb-3">
       <div className='col-span-1 flex items-center z-1'>
-        <legend className="text-l font-regular">{name}</legend>
+        <legend className="text-sm font-regular">{name}</legend>
       </div>
       <div className="flex items-center flex-wrap col-span-3">
         <Menu as="div" className="w-full relative text-left">
-          <div className='max-w-[60%] z-0'>
+          <div className='w-full z-0'>
             <Menu.Button className="inline-flex justify-between w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none">
               {selectedOptions[name]}
               <ChevronDownIcon
@@ -42,7 +32,7 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
             leaveTo="transform opacity-0 scale-95"
           >
        
-            <Menu.Items className="origin-top-left absolute left-0 mt-2 w-full min-w-40 max-w-[60%] rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10">
+            <Menu.Items className="origin-top-left absolute left-0 mt-2 w-full min-w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10">
               <div className="">
                 {values.map((value, index) => {
                   const id = `option${name}${value}`;
@@ -60,11 +50,11 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
                             name={`option-${name}`}
                             value={value}
                             checked={checked}
-                            onChange={(e) => {
-                              // handleChange(e.target)
-                              setOptions(name, value);
-                            }}
                             ref={(element) => refs.current[index] = element}
+                            onChange={(e) => {
+                              // handleTaxonomyChange(value)
+                              setOptions(name, value)
+                            }}
                           />
                           <span className="px-2">{value}</span>
                         </label>

@@ -21,7 +21,7 @@ const container = {
   }
 };
 
-export default function ProductImageItems ({items}) {
+export default function ProductImageThumbs ({items}) {
   // build image map
   let imageMap = []
 
@@ -35,6 +35,7 @@ export default function ProductImageItems ({items}) {
     }
     imageMap.push(img)
   })
+
   const [[page, direction], setPage] = useState([0, 0]);
   const imageIndex = wrap(0, imageMap.length, page);
 
@@ -43,46 +44,21 @@ export default function ProductImageItems ({items}) {
   };
 
   return (
-    <div className='relative h-full'>
-        <div className='relative w-full h-96 md:h-[30rem] rounded-lg flex flex-row flex-nowrap items-center justify-center overflow-hidden'>
-            <AnimatePresence initial={false}>
-              <motion.div
-                className=''
-                key={page}
-                variants={container}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                transition={{
-                  opacity: { duration: 0.5 }
-                }}
-              >
-
-                <Image
-                    className='object-cover'
-                    src={imageMap[imageIndex].url}
-                    width={imageMap[imageIndex].width}
-                    height={imageMap[imageIndex].height}
-                    alt={imageMap[imageIndex].alt}
-                    priority
-                />
-              </motion.div>
-            </AnimatePresence>
-        </div>
+    <div className='h-full'>
         {imageMap.length > 1 &&
         <div className='flex flex-row justify-center mt-4 gap-3'>
           {imageMap.map((item) => {
               return (
                 <div
                   key={item.key}
-                  className={`relative w-[44px] h-[44px] border transform-all cursor-pointer${item.key == imageIndex ? ' border-none' : ' border-white'}`}
+                  className={`w-[44px] h-[44px] border transform-all cursor-pointer${item.key == imageIndex ? ' border-none' : ' border-white'}`}
                   onClick={() => goTo(item.key)}
                 >
                   <Image
                     src={item.thumb}
                     className='object-cover h-auto'
-                    width={44}
-                    height={44}
+                    width='44px'
+                    height='44px'
                     alt=''
                   />
                 </div>
