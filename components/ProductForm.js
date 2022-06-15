@@ -1,48 +1,16 @@
 import { useState, useEffect } from 'react'
 import { PlusIcon } from '@heroicons/react/solid'
 import { MinusIcon } from '@heroicons/react/solid'
-import { useCartContext, useAddToCartContext } from '@/context/Store'
+import { useAddToCartContext } from '@/context/Store'
 import ProductOptions from './ProductOptions'
-import axios from "axios"
-import useSWR from 'swr'
-
-// setup inventory fetcher
-const fetchInventory = (url, id) =>
-  axios
-    .get(url, {
-      params: {
-        id: id,
-      },
-    })
-    .then((res) => res.data)
 
 function ProductForm({title, handle, variants, price, setVariantPrice, selectedOptions, setOptions, setSelectedOptions, selectedVariant, allVariantOptions, quantityAvailable, options, mainImg}) {
-  const { data: productInventory } = useSWR(
-    ['/api/available', handle],
-    (url, id) => fetchInventory(url, id),
-    { errorRetryCount: 3 }
-  )
-
-  const [available, setAvailable] = useState(true)
   const [quantity, setQuantity] = useState(1)
   const [variant, setVariant] = useState(variants[0])
-  const isLoading = useCartContext()[2]
   const addToCart = useAddToCartContext()
-
-  // useEffect(() => {
-  //   if (productInventory) {
-  //     const checkAvailable = productInventory?.variants.edges.filter(item => item.node.id === selectedVariant.id)
-
-  //     console.log('checkAvailable',checkAvailable)
-  //     if (checkAvailable[0].node.availableForSale) {
-  //       setAvailable(true)
-  //     } else {
-  //       setAvailable(false)
-  //     }
-  //   }
-  // }, [productInventory, selectedVariant.id])
   
   async function handleAddToCart() {
+
     if (quantity !== '') {
       addToCart({
         productTitle: title,
@@ -58,7 +26,6 @@ function ProductForm({title, handle, variants, price, setVariantPrice, selectedO
   }
 
   function updateQuantity(e) {
-    if (!isLoading) {
       if (e === 0) {
         return
       }
@@ -72,7 +39,6 @@ function ProductForm({title, handle, variants, price, setVariantPrice, selectedO
       } else {
         setQuantity(Math.floor(e))
       }
-    }
   }
 
   return (
@@ -90,8 +56,7 @@ function ProductForm({title, handle, variants, price, setVariantPrice, selectedO
               setSelectedOptions={setSelectedOptions}
               setVariant={setVariant}
               variants={allVariantOptions}
-              // productInventory={productInventory}
-              available={available}
+              available={quantityAvailable}
             />
           ))}
       </div>
@@ -130,7 +95,6 @@ function ProductForm({title, handle, variants, price, setVariantPrice, selectedO
       <button
         className="bg-black rounded-md text-white px-4 py-3 mt-3 hover:bg-gray-800"
         aria-label="cart-button"
-        // onClick={handleAddToCart}
         onClick={handleAddToCart}
       >
         Add to cart
