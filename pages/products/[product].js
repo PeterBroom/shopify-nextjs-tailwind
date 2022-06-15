@@ -3,7 +3,6 @@ import ProductPageContent from "@/components/ProductPageContent"
 import { getProductSlugs, getProduct } from '@/lib/shopify'
 
 function ProductPage({ productData }) {
-  console.log('productData',productData.images.edges[0].node.originalSrc)
   const productURL = `${process.env.NEXT_PUBLIC_SITE_URL}/products/${productData.handle}`
   return (
     <>
