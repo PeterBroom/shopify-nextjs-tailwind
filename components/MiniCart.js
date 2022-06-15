@@ -1,4 +1,4 @@
-import { Fragment, useRef, useEffect, useState, useCallback } from 'react'
+import { Fragment, useRef, useEffect, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
 import { PlusIcon } from '@heroicons/react/solid'
@@ -110,7 +110,7 @@ export default function MiniCart() {
                                   </div>
 
                                   <div className="ml-4 flex-1 flex flex-col">
-                                    <div className='mb-2'>
+                                    <div className='mb-2 grow'>
                                       <div className="flex justify-between text-base font-medium text-gray-900">
                                         <h3>
                                           <Link href={`/products/${product.handle}`} passHref>
