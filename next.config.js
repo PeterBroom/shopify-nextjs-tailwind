@@ -5,9 +5,5 @@ module.exports = {
   },
   images: {
     domains: ['cdn.shopify.com', 'tailwindui.com'],
-  },
-  i18n: {
-    locales: ['en'],
-    defaultLocale: 'en',
-  },
+  }
 }
