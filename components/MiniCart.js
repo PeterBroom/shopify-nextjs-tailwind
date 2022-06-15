@@ -1,4 +1,4 @@
-import { Fragment, useContext, useRef, useEffect, useState } from 'react'
+import { Fragment, useRef, useEffect, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
 import { PlusIcon } from '@heroicons/react/solid'
@@ -86,12 +86,12 @@ export default function MiniCart({ cart }) {
 
                             <ul role="list" className="-my-6 divide-y divide-gray-200">
                               {cartItems.map((product) => (
-                                <li key={product.productTitle + Math.random()} className="py-6 flex">
+                                <li key={product.variantId} className="py-6 flex">
                                   <div className="relative flex-shrink-0 w-24 h-24 border border-gray-200 rounded-md overflow-hidden">
                                     <Image
                                       src={product.productImage.originalSrc}
                                       alt={product.productTitle}
-                                      layout="fill"
+                                      // layout="fill"
                                       width={96}
                                       height={96}
                                       objectFit="cover"
