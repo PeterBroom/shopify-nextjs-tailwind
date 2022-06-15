@@ -26,12 +26,14 @@ export default function ProductImageItems ({items}) {
   let imageMap = []
 
   items.map((item, index) => {
+    const altText = item.node.altText ? item.node.altText : 'Product image'
     const img = {
       key: index,
       url: item.node.originalSrc,
       thumb: item.node.originalSrc,
       width: item.node.width,
       height: item.node.height,
+      altText: altText
     }
     imageMap.push(img)
   })
@@ -63,7 +65,7 @@ export default function ProductImageItems ({items}) {
                     src={imageMap[imageIndex].url}
                     width={imageMap[imageIndex].width}
                     height={imageMap[imageIndex].height}
-                    alt={imageMap[imageIndex].alt}
+                    alt={imageMap[imageIndex].altText}
                     priority
                 />
               </motion.div>
