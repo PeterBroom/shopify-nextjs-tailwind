@@ -66,11 +66,12 @@ function ProductForm({title, handle, variants, price, setVariantPrice, selectedO
           <p className='mr-4'>Quantity</p>
           <div className="flex text-gray-500 flex h-[2rem] justify-center items-center border divide-x divide-solid">
             <button 
+              aria-label='Decrease quantity'
               className='flex items-center justify-center transition-all rounded-sm text-black py-1 px-2'
               onClick={() => updateQuantity(quantity-1)}
             ><MinusIcon className='h-3 w-3' /></button>
             <div className='grow-1'>
-              <label className="text-gray-500 text-sm sr-only">Qty.</label>
+              <label htmlFor='quantity' className="text-gray-500 text-sm sr-only">Qty.</label>
               <input
                 type="text"
                 inputMode="numeric"
@@ -85,6 +86,7 @@ function ProductForm({title, handle, variants, price, setVariantPrice, selectedO
               />
             </div>
             <button 
+              aria-label='Increase quantity'
               className='flex items-center justify-center transition-all rounded-sm text-black py-1 px-2'
               onClick={() => updateQuantity(quantity+1)}
             ><PlusIcon className='h-3 w-3' /></button>

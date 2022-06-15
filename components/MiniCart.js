@@ -23,8 +23,6 @@ export default function MiniCart() {
   useEffect(() => {
     setSubtotal(getCartSubTotal(cart))
   }, [cart])
-
-  console.log(quantityDisabled)
   
   function updateItem(id, quantity, quantityAvailable) {
     setQuantityDisabled(true)
@@ -128,12 +126,14 @@ export default function MiniCart() {
                                     <div className="flex-1 flex items-center justify-between text-sm">
                                       <div className="flex text-gray-500 flex justify-center items-center border divide-x divide-solid">
                                         <button 
+                                          aria-label='Decrease quantity'
                                           disabled={quantityDisabled}
                                           className='flex items-center justify-center transition-all rounded-sm text-black py-1 px-2'
                                           onClick={async () => await updateItem(product.variantId, (product.variantQuantity-1), product.quantityAvailable)}
                                         ><MinusIcon className='h-3 w-3' /></button>
                                           <div className='py-1 px-3 grow-1'><span className='sr-only'>Qty </span>{product.variantQuantity}</div>
                                         <button 
+                                          aria-label='Increase quantity'
                                           disabled={quantityDisabled}
                                           className='flex items-center justify-center transition-all rounded-sm text-black py-1 px-2'
                                           onClick={() => updateItem(product.variantId, (product.variantQuantity+1), product.quantityAvailable)}
