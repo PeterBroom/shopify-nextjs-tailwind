@@ -1,4 +1,4 @@
-import { Fragment, useRef, useEffect, useState } from 'react'
+import { Fragment, useRef, useEffect, useState, useCallback } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
 import { PlusIcon } from '@heroicons/react/solid'
@@ -12,22 +12,35 @@ import Link from 'next/link'
 import { useUpdateCartQuantityContext, useCartContext, useMenuContext } from '@/context/Store'
 import { formatter } from '@/utils/helpers'
 
-export default function MiniCart({ cart }) {
+export default function MiniCart() {
   const cancelButtonRef = useRef()
-  const updateCartQuantity = useUpdateCartQuantityContext()
-  const [checkoutUrl] = useCartContext()
-  const isLoading = useCartContext()[2]
+  const updateCartItemQuantity = useUpdateCartQuantityContext()
+  const [cart, checkoutUrl] = useCartContext()
   const [cartOpen, setCartOpen] = useMenuContext()
-  const [cartItems, setCartItems] = useState([])
   const [subtotal, setSubtotal] = useState(0)
+  const [quantityDisabled, setQuantityDisabled] = useState(false)
 
   useEffect(() => {
-    setCartItems(cart)
     setSubtotal(getCartSubTotal(cart))
   }, [cart])
 
-  async function updateItem(id, quantity) {
-    updateCartQuantity(id, quantity)
+  console.log(quantityDisabled)
+  
+  function updateItem(id, quantity, quantityAvailable) {
+    setQuantityDisabled(true)
+    if (quantity >= 1 || quantity <= quantityAvailable) {
+      updateCartItemQuantity(id, quantity)
+      .then(() => {
+        setQuantityDisabled(false)
+      })
+      .catch((err) => {
+        console.error(`Error: ${err}`)
+      });
+    }
+  }
+
+  function deleteItem(id, quantity) {
+    updateCartItemQuantity(id, quantity)
   }
 
   return (
@@ -82,10 +95,10 @@ export default function MiniCart({ cart }) {
                     <div className="mt-8">
                       <div className="flow-root">
                         {
-                          cartItems.length > 0 ?
+                          cart.length > 0 ?
 
                             <ul role="list" className="-my-6 divide-y divide-gray-200">
-                              {cartItems.map((product) => (
+                              {cart.map((product) => (
                                 <li key={product.variantId} className="py-6 flex">
                                   <div className="relative flex-shrink-0 w-24 h-24 border border-gray-200 rounded-md overflow-hidden">
                                     <Image
@@ -109,34 +122,27 @@ export default function MiniCart({ cart }) {
                                         <p className="ml-4">{formatter.format(product.variantPrice)}</p>
                                       </div>
                                       {product.variantTitle != 'Default Title' &&
-                                      <p className="mt-1 text-sm text-gray-500">{product.productTitle}</p>
+                                      <p className="mt-1 text-sm text-gray-500">{product.variantTitle}</p>
                                       }
                                     </div>
                                     <div className="flex-1 flex items-center justify-between text-sm">
                                       <div className="flex text-gray-500 flex justify-center items-center border divide-x divide-solid">
                                         <button 
+                                          disabled={quantityDisabled}
                                           className='flex items-center justify-center transition-all rounded-sm text-black py-1 px-2'
-                                          onClick={async() => {
-                                            if (!isLoading && (product.variantQuantity-1) >= 1) {
-                                              updateItem(product.variantId, (product.variantQuantity-1))
-                                            }
-                                          }}
-
+                                          onClick={async () => await updateItem(product.variantId, (product.variantQuantity-1), product.quantityAvailable)}
                                         ><MinusIcon className='h-3 w-3' /></button>
                                           <div className='py-1 px-3 grow-1'><span className='sr-only'>Qty </span>{product.variantQuantity}</div>
                                         <button 
+                                          disabled={quantityDisabled}
                                           className='flex items-center justify-center transition-all rounded-sm text-black py-1 px-2'
-                                            onClick={async() => {
-                                              if (!isLoading && (product.variantQuantity+1) <= product.quantityAvailable) {
-                                                updateItem(product.variantId, (product.variantQuantity+1))
-                                              }
-                                            }}
-                                          ><PlusIcon className='h-3 w-3' /></button>
+                                          onClick={() => updateItem(product.variantId, (product.variantQuantity+1), product.quantityAvailable)}
+                                        ><PlusIcon className='h-3 w-3' /></button>
                                       </div>
 
                                       <div className="flex">
                                         <button
-                                          onClick={async() => updateItem(product.variantId, 0)}
+                                          onClick={() => deleteItem(product.variantId, 0)}
                                           type="button"
                                           className="font-medium text-gray-500 hover:text-gray-800">
                                           Remove
