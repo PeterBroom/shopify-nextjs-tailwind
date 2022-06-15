@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useRef, useEffect } from 'react'
+import React, { Fragment, useRef } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/solid'
 
