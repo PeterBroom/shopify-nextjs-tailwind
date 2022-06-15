@@ -1,171 +1,106 @@
-import { useState, useEffect, useContext } from "react"
-import { formatter } from '../utils/helpers'
-import ProductOptions from "./ProductOptions"
-import { CartContext } from "../context/shopContext"
-import axios from "axios"
-import useSWR from 'swr'
+import { useState, useEffect } from 'react'
+import { PlusIcon } from '@heroicons/react/solid'
+import { MinusIcon } from '@heroicons/react/solid'
+import { useAddToCartContext } from '@/context/Store'
+import ProductOptions from './ProductOptions'
 
-// setup inventory fetcher
-const fetchInventory = (url, id) =>
-  axios
-    .get(url, {
-      params: {
-        id: id,
-      },
-    })
-    .then((res) => res.data)
+function ProductForm({title, handle, variants, price, setVariantPrice, selectedOptions, setOptions, setSelectedOptions, selectedVariant, allVariantOptions, quantityAvailable, options, mainImg}) {
+  const [quantity, setQuantity] = useState(1)
+  const [variant, setVariant] = useState(variants[0])
+  const addToCart = useAddToCartContext()
+  
+  async function handleAddToCart() {
 
-export default function ProductForm({ product }) {
-  const { data: productInventory } = useSWR(
-    ['/api/available', product.handle],
-    (url, id) => fetchInventory(url, id),
-    { errorRetryCount: 3 }
-  )
-  const { data: productQuantity } = useSWR(
-    ['/api/quantity', product.handle],
-    (url, id) => fetchInventory(url, id),
-    { errorRetryCount: 3 }
-  )
-
-  const [available, setAvailable] = useState(true)
-  const [quantity, setQuantity] = useState(0)
-
-  const { addToCart } = useContext(CartContext)
-
-  const allVariantOptions = product.variants.edges?.map(variant => {
-    const allOptions = {}
-
-    variant.node.selectedOptions.map(item => {
-      allOptions[item.name] = item.value
-    })
-    // console.log('variant', variant)
-
-    return {
-      id: variant.node.id,
-      title: product.title,
-      handle: product.handle,
-      image: variant.node.image?.originalSrc,
-      options: allOptions,
-      variantTitle: variant.node.title,
-      variantPrice: variant.node.priceV2.amount,
-      variantQuantity: 1
+    if (quantity !== '') {
+      addToCart({
+        productTitle: title,
+        productHandle: handle,
+        productImage: mainImg,
+        variantId: selectedVariant.id,
+        variantPrice: price,
+        variantTitle: selectedVariant.variantTitle,
+        variantQuantity: quantity,
+        quantityAvailable: variant.node.quantityAvailable
+      })
     }
-  })
-
-  const defaultValues = {}
-  product.options.map(item => {
-    defaultValues[item.name] = item.values[0]
-  })
-
-  const [selectedVariant, setSelectedVariant] = useState(allVariantOptions[0])
-  const [selectedOptions, setSelectedOptions] = useState(defaultValues)
-
-  function setOptions(name, value) {
-    setSelectedOptions(prevState => {
-      return { ...prevState, [name]: value }
-    })
-
-    const selection = {
-      ...selectedOptions,
-      [name]: value
-    }
-
-    allVariantOptions.map(item => {
-      if (JSON.stringify(item.options) === JSON.stringify(selection)) {
-        setSelectedVariant(item)
-      }
-    })
   }
 
-  useEffect(() => {
-    if (productInventory) {
-      const checkAvailable = productInventory?.variants.edges.filter(item => item.node.id === selectedVariant.id)
-
-      if (checkAvailable[0].node.availableForSale) {
-        setAvailable(true)
-      } else {
-        setAvailable(false)
+  function updateQuantity(e) {
+      if (e === 0) {
+        return
       }
-    }
-  }, [productInventory, selectedVariant])
 
-
-  useEffect(() => {
-    if (productQuantity) {
-      const checkQuantity = productQuantity?.variants.edges.filter(item => item.node.id === selectedVariant.id)
-      if (checkQuantity[0].node.quantityAvailable) {
-        setQuantity(checkQuantity[0].node.quantityAvailable)
-      } else {
-        setQuantity(0)
+      if (e > Math.floor(quantityAvailable)) {
+        return
       }
-    }
-  }, [productQuantity, selectedVariant])
 
-  const [inventoryLoaded, setInventoryLoaded] = useState(false)
-  useEffect(() => {
-    if (productInventory) {
-      setInventoryLoaded(true)
-    }
-  }, [productInventory])
+      if (e === '') {
+        setQuantity('')
+      } else {
+        setQuantity(Math.floor(e))
+      }
+  }
 
   return (
-    <div className="flex flex-col h-full w-full">
-      <h2 className="mb-3 text-2xl font-bold">{product.title}</h2>
-      <span className="pb-3">{formatter.format(selectedVariant.variantPrice)}</span>
-      <div className="max-w-sm mb-6">
-        <p className="text-sm">{product.description}</p>
-      </div>
-      <div className="grow"/>
-        <div className="rounded-lg p-4 shadow-lg flex flex-col">
-        {
-          product.options[0].values[0] !== 'Default Title' &&
-          product.options.map(({ name, values }) => (
+    <div className="w-full h-full flex flex-col">
+      <div className='grow'/>
+        <div className="md:max-w-[40%] md:max-w-full flex flex-col">
+          {options[0].values[0] !== 'Default Title' && options.map(({ name, values }) => (
             <ProductOptions
               key={`key-${name}`}
               name={name}
               values={values}
               selectedOptions={selectedOptions}
               setOptions={setOptions}
-              selectedVariant={selectedVariant}
-              productInventory={productInventory}
-              available={available}
+              selectedVariant={setVariantPrice}
+              setSelectedOptions={setSelectedOptions}
+              setVariant={setVariant}
+              variants={allVariantOptions}
+              available={quantityAvailable}
             />
-          ))
-        }
-        {inventoryLoaded == false ?
-        <div className='w-full h-full absolute translate-[50%] flex justify-center items-center px-4 py-2 font-light leading-6 text-sm text-black bg-white hover:bg-black-400 transition ease-in-out duration-150 cursor-not-allowed'>
-          <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-            <circle className="opacity-0" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-            <path className="opacity-100" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-          </svg>
-        </div>
-        :
-        <>
-        <div className="text-sm text-gray-500 py-2 mb-3">
-          {quantity ? 
-            <p>{quantity} Available</p>
-                :
-            <p>None available</p>
-          }
-        </div>
-
-        <div className={`flex flex-col transition-opacity delay-300 ease-in ${inventoryLoaded === true ? 'opacity-1' : 'opacity-0'}`}>
-          {available && quantity ?
-            <button
-              onClick={() => {
-                addToCart(selectedVariant)
-              }}
-              className="bg-black rounded-lg text-white px-2 py-3 mt-3 hover:bg-gray-800">Add To Cart
-            </button> :
-            <button
-              className="rounded-lg text-white px-2 py-3 mt-3 bg-gray-500 cursor-not-allowed">
-                Sold out!
-            </button>
-          }
-        </div>
-        </>
-        }
+          ))}
       </div>
+
+      <div className="flex justify-start space-x-2 w-full my-4">
+        <div className="flex-1 flex flex-row items-center justify-start text-sm">
+          <p className='mr-4'>Quantity</p>
+          <div className="flex text-gray-500 flex h-[2rem] justify-center items-center border divide-x divide-solid">
+            <button 
+              className='flex items-center justify-center transition-all rounded-sm text-black py-1 px-2'
+              onClick={() => updateQuantity(quantity-1)}
+            ><MinusIcon className='h-3 w-3' /></button>
+            <div className='grow-1'>
+              <label className="text-gray-500 text-sm sr-only">Qty.</label>
+              <input
+                type="text"
+                inputMode="numeric"
+                id="quantity"
+                name="quantity"
+                min="1"
+                max={quantityAvailable}
+                step="1"
+                value={quantity}
+                onChange={(e) => updateQuantity(e.target.value)}
+                className="appearance-none max-w-[2rem] text-center text-sm m-0 p-0 text-gray-900 border-0 line-height-0 max-w-10 focus:ring-0"
+              />
+            </div>
+            <button 
+              className='flex items-center justify-center transition-all rounded-sm text-black py-1 px-2'
+              onClick={() => updateQuantity(quantity+1)}
+            ><PlusIcon className='h-3 w-3' /></button>
+          </div>
+        </div>
+      </div>
+
+      <button
+        className="bg-black rounded-md text-white px-4 py-3 mt-3 hover:bg-gray-800"
+        aria-label="cart-button"
+        onClick={handleAddToCart}
+      >
+        Add to cart
+      </button>
     </div>
-    )
+  )
 }
+
+export default ProductForm
