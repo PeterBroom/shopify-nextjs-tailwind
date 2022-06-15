@@ -109,14 +109,14 @@ export function CartProvider({ children }) {
   }
 
   return (
-      <CartContext.Provider value={[cart, checkoutUrl, isLoading]}>
-          <MenuContext.Provider value={[cartOpen, setCartOpen]}>
-            <AddToCartContext.Provider value={addToCart}>
-              <UpdateCartQuantityContext.Provider value={updateCartItemQuantity}>
-                    {children}
-              </UpdateCartQuantityContext.Provider>
-            </AddToCartContext.Provider>
-          </MenuContext.Provider>
-      </CartContext.Provider>
+    <CartContext.Provider value={[cart, checkoutUrl, isLoading]}>
+      <MenuContext.Provider value={[cartOpen, setCartOpen]}>
+        <AddToCartContext.Provider value={addToCart}>
+          <UpdateCartQuantityContext.Provider value={updateCartItemQuantity}>
+              {children}
+          </UpdateCartQuantityContext.Provider>
+        </AddToCartContext.Provider>
+      </MenuContext.Provider>
+    </CartContext.Provider>
   )
 }

@@ -97,7 +97,7 @@ function ProductForm({title, handle, variants, price, setVariantPrice, selectedO
       <button
         className="bg-black rounded-md text-white px-4 py-3 mt-3 hover:bg-gray-800"
         aria-label="cart-button"
-        onClick={handleAddToCart}
+        onClick={() => handleAddToCart()}
       >
         Add to cart
       </button>
